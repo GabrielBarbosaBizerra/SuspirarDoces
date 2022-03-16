@@ -8,4 +8,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SuspirarDoces.Application\SuspirarDoces.Application.csproj" />
+    <ProjectReference Include="..\SuspirarDoces.Infrastructure.Data\SuspirarDoces.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\SuspirarDoces.Infrastructure.IoC\SuspirarDoces.Infrastructure.IoC.csproj" />
+  </ItemGroup>
+
 </Project>
