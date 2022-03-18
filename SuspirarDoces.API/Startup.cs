@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using SuspirarDoces.API.ConfigurationMapping;
 using SuspirarDoces.Infrastructure.IoC;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace SuspirarDoces.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddInfrastructure(Configuration);
+            services.AddAutoMapperConfiguration();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
