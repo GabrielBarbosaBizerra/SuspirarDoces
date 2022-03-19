@@ -20,12 +20,12 @@ namespace SuspirarDoces.Infrastructure.Data.Repositories
 
         public async Task<IEnumerable<Resultado>> GetAll()
         {
-            return await _context.Resultados.ToListAsync();
+            return await _context.Resultados.AsNoTracking().ToListAsync();
         }
 
         public async Task<Resultado> GetById(int? id)
         {
-            return await _context.Resultados.FindAsync(id);
+            return await _context.Resultados.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public void Add(Resultado entity)

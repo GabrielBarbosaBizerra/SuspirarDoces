@@ -20,7 +20,7 @@ namespace SuspirarDoces.Infrastructure.Data.Repositories
 
         public async Task<IEnumerable<ProdutoPedido>> GetAll()
         {
-            return await _context.ProdutosPedidos.ToListAsync();
+            return await _context.ProdutosPedidos.AsNoTracking().ToListAsync();
         }
 
         public async Task<ProdutoPedido> GetById(int? id)

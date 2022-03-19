@@ -42,36 +42,14 @@ namespace SuspirarDoces.Application.Services
 
         public void Remove(int? id)
         {
-            if (Exist(id))
-            {
                 var client = _clientRepository.GetById(id).Result;
                 _clientRepository.Remove(client);
-            }
-            else
-            {
-                throw new Exception("Cliente informado não existe");
-            }
         }
 
         public void Update(ClientViewModel entity)
         {
-            var exist = Exist(entity.Id);
-            if(exist == false)
-            {
-                throw new Exception("Cliente informado não existe");
-            }
-            else
-            {
                 var client = _mapper.Map<Cliente>(entity);
                 _clientRepository.Update(client);
-            }
-        }
-
-        public bool Exist(int? id)
-        {
-            var client = _clientRepository.GetById(id).Result;
-            if (client == null) return false;
-            return true;
         }
     }
 }

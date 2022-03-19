@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using SuspirarDoces.Application.Interfaces;
 using SuspirarDoces.Application.ViewsModel;
 using System;
@@ -18,74 +19,82 @@ namespace SuspirarDoces.API.Controllers
         }
 
         [HttpGet]
-        [Route("/clients")]
-        public async Task<ActionResult<IEnumerable<ClientViewModel>>> GetClients()
+        [Route("/clientes")]
+        public async Task<ActionResult<IEnumerable<ClientViewModel>>> GetAll()
         {
-            var result = await _clientService.GetAll();
-            return StatusCode(200, result);
+            var clients = await _clientService.GetAll();
+            return StatusCode(StatusCodes.Status200OK, clients);
         }
+
         [HttpGet]
-        [Route("/clients/{id}")]
+        [Route("/clientes/{id}")]
         public async Task<ActionResult<ClientViewModel>> GetById(int? id)
         {
             var client = await _clientService.GetById(id);
 
-            if (client == null) return NotFound("Cliente não encontrado. Verifique o Id informado");
+            if (client == null) return StatusCode(StatusCodes.Status404NotFound, "Cliente não encontrado. Verifique o Id informado");
 
-            return client;
+            return StatusCode(StatusCodes.Status200OK, client);
         }
+
         [HttpPost]
-        [Route("/clients")]
-        public IActionResult Post([Bind("Id, CPF, Nome, Telefone, Cidade")] ClientViewModel client)
+        [Route("/clientes")]
+        public IActionResult Post([Bind("CPF, Nome, Telefone, Cidade")] ClientViewModel client)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     _clientService.Add(client);
-                    return StatusCode(201);
+                    return StatusCode(StatusCodes.Status201Created, "Cliente inserido com sucesso");
                 }
                 catch (Exception e)
                 {
-                    return StatusCode(500, $"Erro. {e.Message}");
+                    return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar inserir o cliente. {e.Message}");
                 }
             }
-            return StatusCode(400, client);
+            return StatusCode(StatusCodes.Status400BadRequest, client);
         }
 
         [HttpPut]
-        [Route("/clients/{id}")]
-        public IActionResult Put([Bind("Id, CPF, Nome, Telefone, Cidade")] ClientViewModel client, int? id)
+        [Route("/clientes/{id}")]
+        public async Task<IActionResult> PutAsync([Bind("CPF, Nome, Telefone, Cidade")] ClientViewModel client, int? id)
         {
-            if (client.Id != id) return BadRequest("Informe um id Válido");
+            if (client.Id != id) return StatusCode(StatusCodes.Status400BadRequest, "Informe um id Válido");
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    var model = await _clientService.GetById(id);
+                    if (model == null) return StatusCode(StatusCodes.Status404NotFound, "Cliente informado não existe");
+
                     _clientService.Update(client);
-                    return StatusCode(200, $"Cliente {client.Nome} atualizado com sucesso!");
+                    return StatusCode(StatusCodes.Status200OK, $"Cliente - {client.Nome} - atualizado com sucesso!");
                 }
                 catch (Exception e)
                 {
-                    return StatusCode(400, $"Erro. {e.Message}");
+                    return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar atualizar o cliente. {e.Message}");
                 }
             }
-            return StatusCode(400, client);
+            return StatusCode(StatusCodes.Status400BadRequest, client);
         }
 
         [HttpDelete]
-        [Route("/clients/{id}")]
-        public IActionResult Delete(int id)
+        [Route("/clientes/{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             try
             {
+                var model = await _clientService.GetById(id);
+                if (model == null) return StatusCode(StatusCodes.Status404NotFound, "Cliente informado não existe");
+
                 _clientService.Remove(id);
-                return StatusCode(200,"Cliente deletado com sucesso");
+                return StatusCode(StatusCodes.Status200OK, "Cliente deletado com sucesso");
             }
             catch (Exception e)
             {
-                return StatusCode(400, $"Erro. {e.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar deletar o cliente. {e.Message}");
             }
         }
     }

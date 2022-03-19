@@ -20,12 +20,12 @@ namespace SuspirarDoces.Infrastructure.Data.Repositories
 
         public async Task<IEnumerable<Pedido>> GetAll()
         {
-            return await _context.Pedidos.ToListAsync();
+            return await _context.Pedidos.AsNoTracking().ToListAsync();
         }
 
         public async Task<Pedido> GetById(int? id)
         {
-            return await _context.Pedidos.FindAsync(id);
+            return await _context.Pedidos.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public void Add(Pedido entity)
