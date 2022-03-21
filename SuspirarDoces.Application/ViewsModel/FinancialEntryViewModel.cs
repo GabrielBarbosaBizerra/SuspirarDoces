@@ -15,7 +15,7 @@ namespace SuspirarDoces.Application.ViewsModel
 
         [Required(ErrorMessage = "Obrigatório Informar Nome")]
         [MinLength(3)]
-        [MaxLength(20)]
+        [MaxLength(50)]
         [DisplayName("Nome da Entrada")]
         public string Nome { get; set; }
 

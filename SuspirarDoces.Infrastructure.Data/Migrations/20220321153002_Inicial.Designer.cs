@@ -10,8 +10,8 @@ using SuspirarDoces.Infrastructure.Data.Context;
 namespace SuspirarDoces.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220316194341_Initial")]
-    partial class Initial
+    [Migration("20220321153002_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,8 +66,8 @@ namespace SuspirarDoces.Infrastructure.Data.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<int?>("PedidoId")
                         .HasColumnType("integer");

@@ -70,7 +70,7 @@ namespace SuspirarDoces.API.Controllers
                     if (model == null) return StatusCode(StatusCodes.Status404NotFound, "Pedido informado não existe");
 
                     _orderService.Update(order);
-                    return StatusCode(StatusCodes.Status200OK, $"Pedido da cliente- {order.Cliente.Nome} - atualizado com sucesso!");
+                    return StatusCode(StatusCodes.Status200OK, $"Pedido atualizado com sucesso!");
                 }
                 catch (Exception e)
                 {

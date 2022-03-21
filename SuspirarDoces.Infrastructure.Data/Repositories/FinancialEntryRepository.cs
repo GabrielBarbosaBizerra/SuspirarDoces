@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SuspirarDoces.Infrastructure.Data.Repositories
 {
-    public class FinancialEntryRepository: IRepository<Entrada>
+    public class FinancialEntryRepository: IFinancialEntryRepository
     {
         private readonly DataContext _context;
         public FinancialEntryRepository(DataContext context)
@@ -28,6 +28,11 @@ namespace SuspirarDoces.Infrastructure.Data.Repositories
             return await _context.Entradas.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<Entrada> GetByOrderId(int? id)
+        {
+            return await _context.Entradas.AsNoTracking().Where(x => x.PedidoId == id).FirstOrDefaultAsync();
+        }
+        
         public void Add(Entrada entity)
         {
             _context.Add(entity);
@@ -46,5 +51,6 @@ namespace SuspirarDoces.Infrastructure.Data.Repositories
             _context.Update(entity);
             _context.SaveChanges();
         }
+
     }
 }

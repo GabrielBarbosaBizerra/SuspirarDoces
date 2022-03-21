@@ -19,6 +19,7 @@ namespace SuspirarDoces.Application.Mappings
             CreateMap<FinancialResultViewModel, Resultado>();
             CreateMap<OrderViewModel, Pedido>();
             CreateMap<OrderedProductViewModel, ProdutoPedido>();
+            CreateMap<UserViewModel, Usuario>();
         }
     }
 }

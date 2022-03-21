@@ -13,9 +13,9 @@ namespace SuspirarDoces.Application.Services
 {
     public class FinancialResultService : IService<FinancialResultViewModel>
     {
-        public IRepository<Resultado> _resultRepository;
+        public IFinancialResultRepository _resultRepository;
         private readonly IMapper _mapper;
-        public FinancialResultService(IRepository<Resultado> resultRepository, IMapper mapper)
+        public FinancialResultService(IFinancialResultRepository resultRepository, IMapper mapper)
         {
             _resultRepository = resultRepository;
             _mapper = mapper;
@@ -30,6 +30,12 @@ namespace SuspirarDoces.Application.Services
         public async Task<FinancialResultViewModel> GetById(int? id)
         {
             var result = await _resultRepository.GetById(id);
+            return _mapper.Map<FinancialResultViewModel>(result);
+        }
+
+        public async Task<FinancialResultViewModel> GetByDate(int day, int month)
+        {
+            var result = await _resultRepository.GetByDate(day, month);
             return _mapper.Map<FinancialResultViewModel>(result);
         }
 

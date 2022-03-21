@@ -13,7 +13,7 @@ namespace SuspirarDoces.Infrastructure.Data.EntitiesConfigurations
     {
         public void Configure(EntityTypeBuilder<Entrada> builder)
         {
-            builder.Property(x => x.Nome).HasMaxLength(20).IsRequired();
+            builder.Property(x => x.Nome).HasMaxLength(50).IsRequired();
             builder.Property(x => x.Valor).HasPrecision(10, 2);
             builder.Property(x => x.Descricao).HasMaxLength(25);
             builder.Property(x => x.Data).IsRequired();

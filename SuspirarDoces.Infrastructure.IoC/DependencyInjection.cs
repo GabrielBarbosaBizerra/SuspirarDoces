@@ -22,16 +22,20 @@ namespace SuspirarDoces.Infrastructure.IoC
         {
             services.AddEntityFrameworkNpgsql().AddDbContext<DataContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+
             services.AddScoped<IRepository<Cliente>, ClientRepository>();
-            services.AddScoped<IRepository<Entrada>, FinancialEntryRepository>();
+            services.AddScoped<IFinancialEntryRepository, FinancialEntryRepository>();
+            services.AddScoped<IAuthenticateService, AuthenticateService>();
             services.AddScoped<IRepository<Saida>, FinancialOutputRepository>();
-            services.AddScoped<IRepository<Resultado>, FinancialResultRepository>();
+            services.AddScoped<IFinancialResultRepository, FinancialResultRepository>();
             services.AddScoped<IRepository<Ingrediente>, IngredientRepository>();
             services.AddScoped<IRepository<Estoque>, InventoryRepository>();
             services.AddScoped<IRepository<Pedido>, OrderRepository>();
             services.AddScoped<IRepository<ProdutoPedido>, OrderedProduct>();
             services.AddScoped<IRepository<Produto>, ProductRepository>();
-            services.AddScoped<IRepository<Usuario>, UserRepository>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddScoped<IService<ClientViewModel>, ClientService>();
             services.AddScoped<IService<FinancialEntryViewModel>, FinancialEntryService>();
@@ -42,7 +46,7 @@ namespace SuspirarDoces.Infrastructure.IoC
             services.AddScoped<IService<OrderViewModel>, OrderService>();
             services.AddScoped<IService<OrderedProductViewModel>, OrderedProductService>();
             services.AddScoped<IService<ProductViewModel>, ProductService>();
-            services.AddScoped<IService<UserViewModel>,UserService>();
+            services.AddScoped<IService<UserViewModel>, UserService>();
 
             return services;
         }

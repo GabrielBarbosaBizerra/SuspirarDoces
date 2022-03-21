@@ -15,7 +15,7 @@ namespace SuspirarDoces.Application.ViewsModel
         [MaxLength(15)]
         [DisplayName("Email")]
         public string Email { get; set; }
-
+        
         [Required(ErrorMessage = "Obrigatório Informar Senha")]
         [MinLength(4)]
         [MaxLength(8)]

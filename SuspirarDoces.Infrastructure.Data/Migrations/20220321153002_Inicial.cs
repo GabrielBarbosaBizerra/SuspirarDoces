@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace SuspirarDoces.Infrastructure.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -93,7 +93,7 @@ namespace SuspirarDoces.Infrastructure.Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Email = table.Column<string>(type: "character varying(15)", maxLength: 15, nullable: false),
-                    Senha = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false)
+                    Senha = table.Column<string>(type: "character varying(60)", maxLength: 8, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -155,7 +155,7 @@ namespace SuspirarDoces.Infrastructure.Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PedidoId = table.Column<int>(type: "integer", nullable: true),
-                    Nome = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    Nome = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Valor = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: false),
                     Descricao = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: true),
                     Data = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)

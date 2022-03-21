@@ -61,6 +61,10 @@ namespace SuspirarDoces.API.Controllers
         public async Task<IActionResult> PutAsync([Bind("PedidoId, Nome, Valor, Descricao, Data")] FinancialEntryViewModel entry, int? id)
         {
             if (entry.Id != id) return StatusCode(StatusCodes.Status400BadRequest, "Informe um id Válido");
+            if (entry.Valor < 1)
+            {
+                return BadRequest("Entrada não pode ser negativa");
+            }
 
             if (ModelState.IsValid)
             {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SuspirarDoces.Infrastructure.Data.Repositories
 {
-    public class FinancialResultRepository: IRepository<Resultado>
+    public class FinancialResultRepository: IFinancialResultRepository
     {
         private readonly DataContext _context;
         public FinancialResultRepository(DataContext context)
@@ -26,6 +26,11 @@ namespace SuspirarDoces.Infrastructure.Data.Repositories
         public async Task<Resultado> GetById(int? id)
         {
             return await _context.Resultados.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<Resultado> GetByDate(int day, int month)
+        {
+            return await _context.Resultados.AsNoTracking().Where(x => x.Data.Day.Equals(day) && x.Data.Month.Equals(month)).FirstOrDefaultAsync();
         }
 
         public void Add(Resultado entity)

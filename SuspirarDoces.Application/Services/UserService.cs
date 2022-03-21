@@ -13,10 +13,10 @@ namespace SuspirarDoces.Application.Services
 {
     public class UserService : IService<UserViewModel>
     {
-        public IRepository<Usuario> _userRepository;
+        public IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public UserService(IMapper mapper, IRepository<Usuario> userRepository)
+        public UserService(IMapper mapper, IUserRepository userRepository)
         {
             _userRepository = userRepository;
             _mapper = mapper;
@@ -36,6 +36,7 @@ namespace SuspirarDoces.Application.Services
 
         public void Add(UserViewModel entity)
         {
+            entity.Senha = Services.EncriptarSenhas(entity.Senha);
             var user = _mapper.Map<Usuario>(entity);
             _userRepository.Add(user);
         }

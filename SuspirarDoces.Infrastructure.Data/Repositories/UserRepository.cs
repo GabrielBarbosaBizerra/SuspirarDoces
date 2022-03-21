@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SuspirarDoces.Infrastructure.Data.Repositories
 {
-    public class UserRepository: IRepository<Usuario>
+    public class UserRepository: IUserRepository
     {
         private readonly DataContext _context;
         public UserRepository(DataContext context)
@@ -45,6 +45,11 @@ namespace SuspirarDoces.Infrastructure.Data.Repositories
         {
             _context.Update(entity);
             _context.SaveChanges();
+        }
+
+        public async Task<Usuario> FindUser(Usuario user)
+        {
+            return await _context.Usuarios.AsNoTracking().Where(x => x.Email.Equals(user.Email) && x.Senha.Equals(user.Senha)).FirstOrDefaultAsync();
         }
     }
 }
