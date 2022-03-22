@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SuspirarDoces.Application.Interfaces;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace SuspirarDoces.API.Controllers
 {
     [ApiController]
+    [Authorize]
     public class IngredientsController: ControllerBase
     {
         private readonly IService<IngredientViewModel> _ingredienteService;

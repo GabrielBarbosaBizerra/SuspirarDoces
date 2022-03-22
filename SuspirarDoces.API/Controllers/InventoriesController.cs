@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SuspirarDoces.Application.Interfaces;
 using SuspirarDoces.Application.ViewsModel;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace SuspirarDoces.API.Controllers
 {
     [ApiController]
+    [Authorize]
     public class InventoriesController : ControllerBase
     {
         private readonly IService<InventoryViewModel> _inventoryService;

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SuspirarDoces.Application.Interfaces;
@@ -20,6 +21,7 @@ namespace SuspirarDoces.API.Controllers
 
         [HttpGet]
         [Route("/usuarios")]
+        [Authorize()]
         public async Task<ActionResult<IEnumerable<UserViewModel>>> GetAll()
         {
             var users = await _userService.GetAll();
@@ -28,6 +30,7 @@ namespace SuspirarDoces.API.Controllers
 
         [HttpGet]
         [Route("/usuarios/{id}")]
+        [Authorize()]
         public async Task<ActionResult<UserViewModel>> GetById(int? id)
         {
             var user = await _userService.GetById(id);
@@ -39,6 +42,7 @@ namespace SuspirarDoces.API.Controllers
 
         [HttpPost]
         [Route("/usuarios")]
+        [AllowAnonymous]
         public IActionResult Post([Bind("Email, Senha")] UserViewModel user)
         {
             if (ModelState.IsValid)
@@ -58,6 +62,7 @@ namespace SuspirarDoces.API.Controllers
 
         [HttpPut]
         [Route("/usuarios/{id}")]
+        [Authorize()]
         public async Task<IActionResult> PutAsync([Bind("Email, Senha")] UserViewModel user, int? id)
         {
             if (user.Id != id) return StatusCode(StatusCodes.Status400BadRequest, "Informe um id Válido");
@@ -82,6 +87,7 @@ namespace SuspirarDoces.API.Controllers
 
         [HttpDelete]
         [Route("/usuarios/{id}")]
+        [Authorize()]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             try
