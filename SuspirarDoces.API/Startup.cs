@@ -24,10 +24,24 @@ namespace SuspirarDoces.API
         }
 
         public IConfiguration Configuration { get; }
-
+        public string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://suspirardocesadmin.azurewebsites.net"
+                                        )
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+                });
+            });
+
+
+
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
                                         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -64,7 +78,7 @@ namespace SuspirarDoces.API
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

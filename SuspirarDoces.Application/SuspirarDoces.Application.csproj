@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Remove="Services\Exist.cs" />
+    <Compile Remove="ViewsModel\UserToken.cs" />
   </ItemGroup>
 
   <ItemGroup>

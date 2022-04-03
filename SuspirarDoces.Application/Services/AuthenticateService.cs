@@ -24,7 +24,7 @@ namespace SuspirarDoces.Application.Services
             _mapper = mapper;
         }
 
-        public string Authenticate(UserViewModel user, string secretKey)
+        public UserTokenViewModel Authenticate(UserViewModel user, string secretKey)
         {
             user.Senha = Services.EncriptarSenhas(user.Senha);
 
@@ -33,24 +33,21 @@ namespace SuspirarDoces.Application.Services
 
             if (usuario != null)
             {
-                var claims = new[]
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(secretKey);
+                var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    new Claim(ClaimTypes.Email, user.Email)
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                        new Claim(ClaimTypes.Email, user.Email)
+                    }),
+                    Expires = DateTime.UtcNow.AddMinutes(30),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
-
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-
-                var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-                var token = new JwtSecurityToken(
-                    claims: claims,
-                    expires: DateTime.Now.AddHours(8),
-                    signingCredentials: cred
-                );
-
-                return new JwtSecurityTokenHandler().WriteToken(token);
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                return new UserTokenViewModel(user.Email, tokenHandler.WriteToken(token));
             }
-            return "Credenciais Inválidas";
+            throw new Exception("Credenciais Inválidas");
         }
     }
 }

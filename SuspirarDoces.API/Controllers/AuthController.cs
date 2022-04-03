@@ -25,7 +25,8 @@ namespace SuspirarDoces.API.Controllers
 
         [HttpPost]
         [Route("/autenticar")]
-        public ActionResult Authenticate(UserViewModel user)
+        [AllowAnonymous]
+        public ActionResult<UserTokenViewModel> Authenticate(UserViewModel user)
         {
             if (string.IsNullOrEmpty(user.Email))
             {
@@ -39,8 +40,9 @@ namespace SuspirarDoces.API.Controllers
             try
             {
                 string secretKey = _configuration["ChaveSecreta"];
-                var token = _authService.Authenticate(user, secretKey);
-                return StatusCode(StatusCodes.Status200OK, token);
+                var userToken = _authService.Authenticate(user, secretKey);
+
+                return StatusCode(StatusCodes.Status200OK, userToken);
             }
             catch (Exception e)
             {

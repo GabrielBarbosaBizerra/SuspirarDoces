@@ -9,6 +9,6 @@ namespace SuspirarDoces.Application.Interfaces
 {
     public interface IAuthenticateService
     {
-        string Authenticate(UserViewModel user, string secretKey);
+        UserTokenViewModel Authenticate(UserViewModel user, string secretKey);
     }
 }
