@@ -33,7 +33,8 @@ namespace SuspirarDoces.API
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.WithOrigins("http://suspirardocesadmin.azurewebsites.net"
+                    builder.WithOrigins("http://suspirardocesadmin.azurewebsites.net",
+                                        "http://localhost:4200"
                                         )
                                         .AllowAnyHeader()
                                         .AllowAnyMethod();
